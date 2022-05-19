@@ -803,7 +803,7 @@ contract Comptroller is ComptrollerStorage, IComptroller, ComptrollerErrorReport
 
         _addMarketInternal(address(marketToken));
         
-        if(distribution != address(0)){
+        if(address(distribution) != address(0)){
             distribution._initializeMarket(address(marketToken));
         }
         
