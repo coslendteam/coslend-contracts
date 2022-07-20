@@ -150,7 +150,7 @@ contract CoslendPriceOracleV1 is OwnableUpgradeSafe {
         tokenConfig.fixedUsd = fixedUsd;
     }
 
-    function updateSource(address marketToken,uint index,address source,string memory sourceType,bool available) public {
+    function updateSource(address marketToken,uint index,address source,string memory sourceType,bool available) public onlyOwner{
         TokenConfig storage tokenConfig = tokenConfigs[marketToken];
         PriceOracle storage priceOracle = tokenConfig.oracles[index];
         priceOracle.source =source;
