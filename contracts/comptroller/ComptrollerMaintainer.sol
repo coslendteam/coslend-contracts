@@ -1,19 +1,19 @@
 pragma solidity 0.6.12;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts-ethereum-package/contracts/access/AccessControl.sol";
 
-contract ComptrollerMaintainer is AccessControl {
+contract ComptrollerMaintainer is AccessControlUpgradeSafe {
 
     bytes32 public constant MAINTAINER = keccak256("MAINTAINER");
     address public comptroller;
 
-    constructor(address _comptroller) public{
+    function initialize(address _comptroller) public initializer {
+        AccessControlUpgradeSafe.__AccessControl_init();
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         comptroller = _comptroller;
     }
 
     function setMintPaused(address[] memory pTokens, bool state) public {
-
         require(hasRole(MAINTAINER, msg.sender), "Caller is not a maintainer");
 
         for (uint i = 0; i < pTokens.length; i++) {
